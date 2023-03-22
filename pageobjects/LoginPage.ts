@@ -9,14 +9,18 @@ export class LoginPage {
 constructor(page: Page)
 {
     this.page = page;
-    this.goTo();
     this.signInbutton= page.locator("[value='Login']");
     this.userName = page.locator("#userEmail");
     this.password = page.locator("#userPassword");
-
 }
 
-async goTo()
+async login(user: string, pwd: string )
+{
+    await this.enterUserAndPwd(user, pwd);
+    await this.submitLogin();
+}
+
+async openLoginPage()
 {
     await this.page.goto("https://rahulshettyacademy.com/client");
 }

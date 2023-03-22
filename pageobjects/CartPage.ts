@@ -1,4 +1,6 @@
-import {expect, Page, Locator} from '@playwright/test';
+import {Page, Locator} from 'playwright';
+import { expect } from '@playwright/test';
+
 export class CartPage
 {
 	public page: Page;
@@ -8,32 +10,35 @@ export class CartPage
 	public orders: Locator;
 	public checkout: Locator;
 
-constructor(page: Page)
-{
+constructor(page: Page){
     this.page = page;
     this.cartProducts = page.locator("div li").first();
     this.productsText = page.locator(".card-body b");
     this.cart =  page.locator("[routerlink*='cart']");
     this.orders = page.locator("button[routerlink*='myorders']");
     this.checkout = page.locator("text=Checkout");
-
 }
 
-async VerifyProductIsDisplayed(productName: string)
-{
+async openCartPage () {
+    await this.page.goto("https://rahulshettyacademy.com/client/dashboard/cart");
+}
+
+async productIsDisplayed(productName: string) {
     await this.cartProducts.waitFor();
-    const bool = await this.getProductLocator(productName).isVisible();
-    expect(bool).toBeTruthy();
+    const locator: Locator =  await this.getProductLocator(productName);
+    const bool =await await locator.isVisible();
+    return bool;
 }
 
-async Checkout()
-{
+deletProductCartPage () {
+    this.page.locator("//button[@class='btn btn-danger']").click;
+}
+
+async Checkout(){
     await this.checkout.click();
 }
 
- getProductLocator(productName: string)
-{
-    return  this.page.locator("h3:has-text('"+productName+"')");
+async getProductLocator(productName: string){
+    return  await this.page.locator("h3:has-text('"+productName+"')");
 }
-
 }

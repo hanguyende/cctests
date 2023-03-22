@@ -5,9 +5,10 @@ import { OrdersHistoryPage } from './OrdersHistoryPage';
 import { OrdersReviewPage } from './OrdersReviewPage';
 import { CartPage } from './CartPage';
 
+
 export class POManager
 {
-	public page: any;
+
 	public loginPage: LoginPage;
 	public dashboardPage: DashboardPage;
 	public ordersHistoryPage: OrdersHistoryPage;
@@ -16,13 +17,11 @@ export class POManager
 
 constructor(page: Page)
 {
-    this.page = page;
-    this.loginPage = new LoginPage(this.page);
-    this.dashboardPage = new DashboardPage(this.page);
-    this.ordersHistoryPage = new OrdersHistoryPage(this.page);
-    this.ordersReviewPage = new OrdersReviewPage(this.page);
-    this.cartPage = new CartPage(this.page);
-
+    this.loginPage = new LoginPage(page);
+    this.dashboardPage = new DashboardPage(page);
+    this.ordersHistoryPage = new OrdersHistoryPage(page);
+    this.ordersReviewPage = new OrdersReviewPage(page);
+    this.cartPage = new CartPage(page);
 
 }
 

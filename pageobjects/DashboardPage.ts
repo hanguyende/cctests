@@ -1,4 +1,4 @@
-import {Page, Locator} from '@playwright/test';
+import {Page, Locator} from 'playwright';
 export class DashboardPage
 {
 	public page: Page;
@@ -16,10 +16,19 @@ constructor(page: Page)
     this.orders = page.locator("button[routerlink*='myorders']");
 
 }
+async openDashboard () {
+    await this.page.goto("https://rahulshettyacademy.com/client/dashboard/dash");
+}
 
-async searchProductAddCart(productName: string)
+async addProduct(product: Locator)
 {
-   
+   if (product!=null){
+        await product.click();
+   } 
+}
+
+async searchProduct(productName: string)
+{
     const titles= await this.productsText.allTextContents();
     console.log("all titles " + titles);
     console.log("this we wanna add " + productName);
@@ -29,10 +38,11 @@ async searchProductAddCart(productName: string)
         if(await this.products.nth(i).locator("b").textContent() === productName)
         {
             //add to cart
-            await this.products.nth(i).locator("text= Add To Cart").click();
+            return this.products.nth(i).locator("text= Add To Cart");
             break
         }
     }
+    return null;
 }
 
 async navigateToOrders()

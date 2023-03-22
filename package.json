@@ -41,5 +41,8 @@
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.--write": "prettier --write"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.31.2"
   }
 }
