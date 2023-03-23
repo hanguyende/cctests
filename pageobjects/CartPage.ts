@@ -1,5 +1,5 @@
 import {Page, Locator} from 'playwright';
-import { expect } from '@playwright/test';
+import { delay } from '../steps/utils/test.setup';
 
 export class CartPage
 {
@@ -25,17 +25,20 @@ async openCartPage () {
 
 async productIsDisplayed(productName: string) {
     await this.cartProducts.waitFor();
+    delay(1000);
     const locator: Locator =  await this.getProductLocator(productName);
-    const bool =await await locator.isVisible();
+    const bool = await await locator.isVisible();
     return bool;
 }
 
-deletProductCartPage () {
-    this.page.locator("//button[@class='btn btn-danger']").click;
+async deletProductCartPage() {
+    await this.page.locator("//button[@class='btn btn-danger']").click();
+    await delay(1000);
 }
 
-async Checkout(){
+async checkoutProduct() {
     await this.checkout.click();
+    await delay(1000);
 }
 
 async getProductLocator(productName: string){

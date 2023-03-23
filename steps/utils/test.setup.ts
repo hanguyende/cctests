@@ -1,10 +1,13 @@
 import { Before, BeforeAll, AfterAll, After } from "@cucumber/cucumber";
 import { chromium, Browser, Page, BrowserContext, request, APIRequestContext } from "playwright";
+import { ApiUtils } from "./ApiUtils";
 
 let page: Page;
 let browser: Browser;
 let context: BrowserContext;
 let apiContext: APIRequestContext;
+let apiUtils: ApiUtils;
+let loginPayLoad = {userEmail:"anshika@gmail.com", userPassword:"Iamking@000"};
 
 BeforeAll(async() => {
     // Browsers are expensive in Playwright so only create 1
@@ -22,18 +25,21 @@ Before( async() => {
     context  = await browser.newContext();
     apiContext = await request.newContext();
     page = await context.newPage();
+    apiUtils = await new ApiUtils(apiContext, loginPayLoad); 
 });
 
-
+function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
 
 // Cleanup after each scenario
 After(async() => {
-    //await context.close();
-    //await page.close();
+    await context.close();
+    await page.close();
 });
 
 AfterAll(async() => {
   await browser.close();
 });
 
-export {browser, page, apiContext};
+export {browser, page, apiContext, delay, apiUtils};

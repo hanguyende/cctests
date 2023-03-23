@@ -1,6 +1,6 @@
 import { expect, Page, Locator } from "@playwright/test";
 
-export class OrdersReviewPage
+export class OrderPage
 {
 	public page: Page;
 	public country: Locator;
@@ -9,22 +9,24 @@ export class OrdersReviewPage
 	public submit: Locator;
 	public orderConfirmationText: Locator;
 	public orderId: Locator;
+    public itemTitle: Locator;
 
 constructor(page: Page)
 {
     this.page = page;
-this.country = page.locator("[placeholder*='Country']");
-this.dropdown = page.locator(".ta-results");
-this.emailId = page.locator(".user__name [type='text']").first();
-this.submit =  page.locator(".action__submit");
-this.orderConfirmationText = page.locator(".hero-primary");
-this.orderId = page.locator(".em-spacer-1 .ng-star-inserted");
-
+    this.country = page.locator("[placeholder*='Country']");
+    this.dropdown = page.locator(".ta-results");
+    this.emailId = page.locator(".user__name [type='text']").first();
+    this.submit =  page.locator(".action__submit");
+    this.orderConfirmationText = page.locator(".hero-primary");
+    this.orderId = page.locator(".em-spacer-1 .ng-star-inserted");
+    this.itemTitle = page.locator("//div[@class='item__title']");
 }
+
 async searchCountryAndSelect(countryCode: string, countryName: string)
 {
 
-    await this.country.type(countryCode,{delay:100});
+    await this.country.type(countryCode,{delay:200});
     await this.dropdown.waitFor();
     const optionsCount = await this.dropdown.locator("button").count();
     for(let i =0;i< optionsCount; ++i)
@@ -49,6 +51,12 @@ async SubmitAndGetOrderId()
  await this.submit.click();
  await expect(this.orderConfirmationText).toHaveText(" Thankyou for the order. ");
  return await this.orderId.textContent();
+}
+
+async VerifyOrdersuccess(username: string)
+{
+    await expect(this.page.locator(".hero-primary")).toHaveText("Thankyou for the order.");
+    await this.page.pause();
 }
 }
    

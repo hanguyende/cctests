@@ -1,27 +1,16 @@
-import { Given, When, Then } from '@cucumber/cucumber';
+import { When, Then } from '@cucumber/cucumber';
 import { page } from './utils/test.setup';
-import { LoginPage } from "../pageobjects/LoginPage";
 import { DashboardPage } from '../pageobjects/DashboardPage';
-import { POManager } from '../pageobjects/POManager';
 import { CartPage } from '../pageobjects/CartPage';
 import { ApiUtils } from './utils/ApiUtils';
-import { Locator } from 'playwright';
-import assert, { AssertionError } from 'assert';
+import assert from 'assert';
 
+let apiUtils: ApiUtils;
 let dashboardPage: DashboardPage;
 let cartPage: CartPage;
-let loginPage: LoginPage;
-
-//login with user {string} and pwd {string}
-Given("login with user {string} and pwd {string} to dashboard", async (user: string, pwd: string) => {
-  // Use the page instance from the World instance to navigate
-  loginPage = new LoginPage(page);
-  await loginPage.openLoginPage();
-  await loginPage.login(user, pwd);
-});
 
 // add productname 'zara coat 3' to card
-When("add productname to cart {string}", async (productName: string) => {
+When("adding productname to cart {string}", async (productName: string) => {
   dashboardPage = new DashboardPage(page);
   const product = await dashboardPage.searchProduct(productName);
   if  (product!=null){ 
@@ -35,12 +24,42 @@ When("remove productname to cart {string}", async (productName: string) => {
   await cartPage.deletProductCartPage();
 });
 
+// add productname 'zara coat 3' to card
+When("go to checkout with the product", async () => {
+  cartPage = new CartPage(page);
+  await cartPage.checkoutProduct();
+});
+
+When("mock response cart list", async () => {
+  const fakePayload = {products:[
+    {
+      _id: "6262e95ae26b7e1a10e89bf0",
+      productName: "zara coat 3",
+      productCategory: "fashion",
+      productSubCategory: "shirts",
+      productPrice: 31500,
+      productDescription: "zara coat 3",
+      productImage: "https://rahulshettyacademy.com/api/ecom/uploads/productImage_1650649434146.jpeg",
+      productRating: "0",
+      productTotalOrders: "0",
+      productStatus: true,
+      productFor: "women",
+      productAddedBy: "admin@gmail.com",
+      __v: 0
+    }
+  ],
+  count: 1,
+  message: "Cart Data Found"};
+  apiUtils.mockCartList(fakePayload);
+});
+
 //productname 'zara coat 3' is 'true/folse' in the cart 
 Then("productname {string} is {string} in the cart", async (productname: string, isDisplayed: string) => {
   await dashboardPage.navigateToCart();
   cartPage = new CartPage(page);
+  const productIsDisplayed = await cartPage.productIsDisplayed(productname);
   assert.equal (
-    (await cartPage.productIsDisplayed(productname)), JSON.parse(isDisplayed),
+    productIsDisplayed, JSON.parse(isDisplayed),
     "product name displayed wrong in cart");
  ;
 });

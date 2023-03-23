@@ -1,4 +1,5 @@
 import {Page, Locator} from 'playwright';
+import { delay } from '../steps/utils/test.setup';
 export class DashboardPage
 {
 	public page: Page;
@@ -24,6 +25,7 @@ async addProduct(product: Locator)
 {
    if (product!=null){
         await product.click();
+        await delay(1000);
    } 
 }
 
@@ -48,11 +50,12 @@ async searchProduct(productName: string)
 async navigateToOrders()
 {
     await this.orders.click();
+    await delay(1000);
 }
 
 
-async navigateToCart()
-{
+async navigateToCart(){
     await this.cart.click();
-}
+    await delay(1000);
+    }
 }

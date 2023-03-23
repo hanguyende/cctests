@@ -1,9 +1,12 @@
-import {APIRequestContext,request, expect, Page} from '@playwright/test';
+import {APIRequestContext, APIResponse, request, expect} from '@playwright/test';
+import { page } from './test.setup';
 
 export class ApiUtils
 {
 	public apiContext: APIRequestContext;
 	public loginPayLoad: any;
+
+    
 
     constructor(apiContext: APIRequestContext,  loginPayLoad: any)
     {
@@ -11,8 +14,7 @@ export class ApiUtils
         this.loginPayLoad = loginPayLoad;
     }
 
-    async setSession (page: Page) {
-    
+    async setSession () {
         const token: string = await this.getToken();
         
         await page.addInitScript(value => 
@@ -24,7 +26,8 @@ export class ApiUtils
 
     async getToken()
     {
-        this.apiContext = await request.newContext();;
+        this.apiContext = await request.newContext();
+        console.log(this.loginPayLoad);
         const loginResponse = await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/auth/login",
         {
             data:this.loginPayLoad
@@ -70,6 +73,35 @@ export class ApiUtils
         })
         const orderJsonResponse = await orderRespone.json();
         console.log(orderJsonResponse);
+
         return orderJsonResponse;
+    }
+
+    async mockOrderList(fakePayload: Object) {
+        await page.route('https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/**', async route =>
+        {
+            const response: APIResponse =  await route.fetch();
+            console.log(response.json);
+            const body = fakePayload;
+            route.fulfill(
+            { 
+                response,
+                body: JSON.stringify(body),
+            });
+        });
+    }
+
+    async mockCartList(fakePayload: Object) {
+        await page.route('https://rahulshettyacademy.com/api/ecom/user/get-cart-products/**', async route =>
+        {
+            const response: APIResponse =  await route.fetch();
+            console.log(response.json);
+            const body = fakePayload;
+            route.fulfill(
+            { 
+                response,
+                body: JSON.stringify(body),
+            });
+        });
     }
 }

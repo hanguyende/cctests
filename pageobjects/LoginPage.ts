@@ -1,4 +1,5 @@
 import {Page, Locator } from 'playwright';
+import { delay } from '../steps/utils/test.setup';
 
 export class LoginPage {
 	public page: Page;
@@ -18,11 +19,13 @@ async login(user: string, pwd: string )
 {
     await this.enterUserAndPwd(user, pwd);
     await this.submitLogin();
+    await delay(1000);
 }
 
 async openLoginPage()
 {
     await this.page.goto("https://rahulshettyacademy.com/client");
+    await delay(1000);
 }
 
 async enterUserAndPwd(username: string,password: string)
@@ -34,8 +37,7 @@ async enterUserAndPwd(username: string,password: string)
 async submitLogin()
 {
     await this.signInbutton.click();
-    await this.page.waitForLoadState('networkidle');
-
+    await delay(1000);
 }
 
 async loginSuccessful()
