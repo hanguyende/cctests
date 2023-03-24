@@ -1,14 +1,13 @@
 import {APIRequestContext, APIResponse, request, expect} from '@playwright/test';
 import { page } from './test.setup';
+import { CartPayload, LoginPayload, OrderPayload } from './MockData';
 
 export class ApiUtils
 {
 	public apiContext: APIRequestContext;
-	public loginPayLoad: any;
+	public loginPayLoad: LoginPayload;    
 
-    
-
-    constructor(apiContext: APIRequestContext,  loginPayLoad: any)
+    constructor(apiContext: APIRequestContext,  loginPayLoad: LoginPayload)
     {
         this.apiContext = apiContext
         this.loginPayLoad = loginPayLoad;
@@ -40,7 +39,7 @@ export class ApiUtils
 
     }
 
-    async createOrder(orderPayLoad: any)
+    async createOrder(orderPayLoad: LoginPayload)
     {
         const token = await this.getToken();
         const orderRespone = await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/order/create-order",
@@ -59,7 +58,7 @@ export class ApiUtils
         return orderId;
     }
 
-    async getOrderResponse(orderPayLoad: any)
+    async getOrderResponse(orderPayLoad: LoginPayload)
     {
         const token = await this.getToken();
         const orderRespone = await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/order/create-order",
@@ -77,7 +76,7 @@ export class ApiUtils
         return orderJsonResponse;
     }
 
-    async mockOrderList(fakePayload: Object) {
+    async mockOrderList(fakePayload: OrderPayload) {
         await page.route('https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/**', async route =>
         {
             const response: APIResponse =  await route.fetch();
@@ -91,7 +90,7 @@ export class ApiUtils
         });
     }
 
-    async mockCartList(fakePayload: Object) {
+    async mockCartList(fakePayload: CartPayload) {
         await page.route('https://rahulshettyacademy.com/api/ecom/user/get-cart-products/**', async route =>
         {
             const response: APIResponse =  await route.fetch();

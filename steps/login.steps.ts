@@ -1,5 +1,5 @@
 import { Given, When, Then } from '@cucumber/cucumber';
-import { page, apiContext } from './utils/test.setup';
+import { page } from './utils/test.setup';
 import { LoginPage } from "../pageobjects/LoginPage";
 import { apiUtils } from './utils/test.setup';
 import assert = require("assert")

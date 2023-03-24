@@ -1,13 +1,9 @@
 import { When, Then } from '@cucumber/cucumber';
 import { page } from './utils/test.setup';
-import { ApiUtils } from './utils/ApiUtils';
-import assert, { AssertionError } from 'assert';
+import assert from 'assert';
 import { OrderPage } from '../pageobjects/OrderPage';
 
 let orderpage: OrderPage;
-let apiUtils: ApiUtils;
-let loginPayLoad: any;
-
 
 //productname 'string' in order
 Then("productname {string} in order", async (productname: string) => {

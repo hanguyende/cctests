@@ -53,7 +53,7 @@ async SubmitAndGetOrderId()
  return await this.orderId.textContent();
 }
 
-async VerifyOrdersuccess(username: string)
+async VerifyOrdersuccess()
 {
     await expect(this.page.locator(".hero-primary")).toHaveText("Thankyou for the order.");
     await this.page.pause();

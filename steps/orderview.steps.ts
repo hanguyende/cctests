@@ -1,41 +1,21 @@
 import { When, Then } from '@cucumber/cucumber';
-import { page, apiContext } from './utils/test.setup';
+import { page } from './utils/test.setup';
 import { DashboardPage } from '../pageobjects/DashboardPage';
 import { apiUtils } from './utils/test.setup';
 import assert from 'assert';
 import { OrdersHistoryPage } from '../pageobjects/OrdersHistoryPage';
+import { orderPayload, emptyOrderPayLoad } from './utils/MockData';
 
-const loginPayLoad = {userEmail:"anshika@gmail.com", userPassword:"Iamking@000"};
 let ordersHistoryPage: OrdersHistoryPage;
 let dashboardPage: DashboardPage;
 
 //mock response empty order list
 When("mock response empty order list", async () => {
-  const fakePayload = {data:[], message:"No Orders"};
-  apiUtils.mockOrderList(fakePayload);
+  apiUtils.mockOrderList(emptyOrderPayLoad);
 });
 
 When("mock response one item in the order list", async () => {
-  const fakePayload = {data:[{
-    _id: "6262e95ae26b7e1a10e89bf0",
-    productName: "zara coat 3",
-    productCategory: "fashion",
-    productSubCategory: "shirts",
-    productPrice: 31500,
-    productDescription: "zara coat 3",
-    productImage: "https://rahulshettyacademy.com/api/ecom/uploads/productImage_1650649434146.jpeg",
-    productRating: "0",
-    productTotalOrders: "0",
-    productStatus: true,
-    productFor: "women",
-    productAddedBy: "admin@gmail.com",
-    __v: 0
-  }
-
-    ], count: 10,
-    message: "All Products fetched Successfully"};
-
-  apiUtils.mockOrderList(fakePayload);
+  apiUtils.mockOrderList(orderPayload);
 });
 
 //click on order link
@@ -52,5 +32,4 @@ Then("orderlist has {int} orders", async (countofProduct: number) => {
   assert.equal (
     count, countofProduct,
     "orderlist is not as espekted");
- ;
 });

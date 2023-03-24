@@ -1,13 +1,14 @@
 import { Before, BeforeAll, AfterAll, After } from "@cucumber/cucumber";
-import { chromium, Browser, Page, BrowserContext, request, APIRequestContext } from "playwright";
+import { chromium, Browser, Page, BrowserContext, request, APIRequestContext} from "playwright";
 import { ApiUtils } from "./ApiUtils";
+import { loginPayLoad } from "./MockData"
+
 
 let page: Page;
 let browser: Browser;
 let context: BrowserContext;
 let apiContext: APIRequestContext;
 let apiUtils: ApiUtils;
-let loginPayLoad = {userEmail:"anshika@gmail.com", userPassword:"Iamking@000"};
 
 BeforeAll(async() => {
     // Browsers are expensive in Playwright so only create 1
