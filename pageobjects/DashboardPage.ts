@@ -1,4 +1,4 @@
-import {Page, Locator} from 'playwright';
+import {Page, Locator, expect} from '@playwright/test';
 import { delay } from '../steps/utils/test.setup';
 export class DashboardPage
 {
@@ -21,12 +21,15 @@ async openDashboard () {
     await this.page.goto("https://rahulshettyacademy.com/client/dashboard/dash");
 }
 
-async addProduct(product: Locator)
+async addProduct(product: Locator|null)
 {
    if (product!=null){
         await product.click();
-        await delay(1000);
-   } 
+        const successMsg =  this.page.locator("//div[@aria-label='Product Added To Cart']");
+        await expect(successMsg).toBeVisible();
+   } else{
+        expect(false, "product is null");
+   }
 }
 
 async searchProduct(productName: string)
@@ -40,8 +43,8 @@ async searchProduct(productName: string)
         if(await this.products.nth(i).locator("b").textContent() === productName)
         {
             //add to cart
+            await delay(1000);
             return this.products.nth(i).locator("text= Add To Cart");
-            break
         }
     }
     return null;
@@ -52,7 +55,6 @@ async navigateToOrders()
     await this.orders.click();
     await delay(1000);
 }
-
 
 async navigateToCart(){
     await this.cart.click();

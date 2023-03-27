@@ -1,12 +1,12 @@
-Feature: login Page testing
+Feature:  On the login page I can only login with a valid username and password
 
-Scenario: Login is successfull
-  Given login with user 'anshika@gmail.com' and pwd 'Iamking@000'
-  When Submit login
-  Then I am 'true' able to Login
+@Login
+Scenario Outline: login with user and password and verify the result.
+  Given I login with user "<User>" and password "<Password>"
+  When I submit login
+  Then I am "<LoginSuccess>" able to Login
 
-
-Scenario: Login is not successfull
-  Given login with user 'anshika@gmail.com' and pwd 'Iamking@00'
-  When Submit login
-  Then I am 'false' able to Login
+  Examples:
+      |User|Password|LoginSuccess|
+      |anshika@gmail.com|Iamking@00|false|
+      |anshika@gmail.com|Iamking@000|true|
