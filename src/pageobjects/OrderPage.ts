@@ -1,30 +1,30 @@
 import { expect, Page, Locator } from "@playwright/test";
 
 export class OrderPage {
-    public page: Page;
-    public country: Locator;
-    public dropdown: Locator;
-    public emailId: Locator;
-    public submit: Locator;
-    public orderConfirmationText: Locator;
-    public orderId: Locator;
-    public itemTitle: Locator;
-    public rows: Locator;
-    public orderdIdDetails: Locator;
-    public ordersTable: Locator;
+    private page: Page;
+    private country: Locator;
+    private dropdown: Locator;
+    private emailId: Locator;
+    private submit: Locator;
+    private orderConfirmationText: Locator;
+    private orderId: Locator;
+    private itemTitle: Locator;
+    private rows: Locator;
+    private orderdIdDetails: Locator;
+    private ordersTable: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.rows = page.locator("tbody tr");
-        this.country = page.locator("[placeholder*='Country']");
-        this.dropdown = page.locator(".ta-results");
-        this.emailId = page.locator(".user__name [type='text']").first();
-        this.submit = page.locator(".action__submit");
-        this.orderConfirmationText = page.locator(".hero-primary");
-        this.orderId = page.locator(".em-spacer-1 .ng-star-inserted");
-        this.itemTitle = page.locator("//div[@class='item__title']");
-        this.orderdIdDetails = page.locator(".col-text");
-        this.ordersTable = page.locator("tbody");
+        this.rows = this.page.locator("tbody tr");
+        this.country = this.page.locator("[placeholder*='Country']");
+        this.dropdown = this.page.locator(".ta-results");
+        this.emailId = this.page.locator(".user__name [type='text']").first();
+        this.submit = this.page.locator(".action__submit");
+        this.orderConfirmationText = this.page.locator(".hero-primary");
+        this.orderId = this.page.locator(".em-spacer-1 .ng-star-inserted");
+        this.itemTitle = this.page.locator("//div[@class='item__title']");
+        this.orderdIdDetails = this.page.locator(".col-text");
+        this.ordersTable = this.page.locator("tbody");
     }
 
     async searchOrderAndSelect(orderId: string) {

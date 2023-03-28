@@ -1,8 +1,8 @@
 import {APIRequestContext, APIResponse, request, expect} from '@playwright/test';
-import { page } from './test.setup';
+import { ICustomWorld } from "./custom-world";
 import { CartPayload, LoginPayload, OrderPayload } from './MockData';
 
-export class ApiUtils
+export class MockApi
 {
 	public apiContext: APIRequestContext;
 	public loginPayLoad: LoginPayload;    
@@ -13,10 +13,9 @@ export class ApiUtils
         this.loginPayLoad = loginPayLoad;
     }
 
-    async setSession () {
+    async setSession (customWorld: ICustomWorld) {
         const token: string = await this.getToken();
-        
-        await page.addInitScript(value => 
+        await customWorld.page!.addInitScript(value => 
             {
                 window.localStorage.setItem('token',value);
             }, token
@@ -54,7 +53,6 @@ export class ApiUtils
         const orderJsonResponse = await orderRespone.json();
         console.log(orderJsonResponse);
         const orderId = orderJsonResponse.orders[0];
-        
         return orderId;
     }
 
@@ -76,8 +74,8 @@ export class ApiUtils
         return orderJsonResponse;
     }
 
-    async mockOrderList(fakePayload: OrderPayload) {
-        await page.route('https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/**', async route =>
+    async mockOrderList(customerWorld: ICustomWorld, fakePayload: OrderPayload) {
+        await customerWorld.page!.route('https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/**', async route =>
         {
             const response: APIResponse =  await route.fetch();
             console.log(response.json);
@@ -90,8 +88,8 @@ export class ApiUtils
         });
     }
 
-    async mockCartList(fakePayload: CartPayload) {
-        await page.route('https://rahulshettyacademy.com/api/ecom/user/get-cart-products/**', async route =>
+    async mockCartList(customerWorld: ICustomWorld, fakePayload: CartPayload) {
+        await customerWorld.page!.route('https://rahulshettyacademy.com/api/ecom/user/get-cart-products/**', async route =>
         {
             const response: APIResponse =  await route.fetch();
             console.log(response.json);

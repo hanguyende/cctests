@@ -10,5 +10,6 @@ let run_features = [
 ].join(' ');
 
 module.exports = {
-    test_runner: run_features
+    test_runner: run_features,
+    default: '--publish-quiet',
 };
