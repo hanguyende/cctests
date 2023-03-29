@@ -30,6 +30,7 @@ export class CartPage {
     }
 
     async checkoutProduct() {
+        await this.page.pause();
         await this.checkout.click();
     }
 

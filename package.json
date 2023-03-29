@@ -4,8 +4,9 @@
   "description": "test automation with cucumber",
   "main": "index.js",
   "scripts": {
-    "test": "npx cucumber-js -p test_runner --parallel 1",
+    "test": "npx cucumber-js -p test_runner --parallel 1 -f json:report/report.json; node report.js type report/report.json",
     "lint": "eslint . --ext .ts",
+    "report": "open reports/report.html",
     "prepare": "husky install"
   },
   "repository": {
@@ -33,7 +34,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-ui-testing": "^2.0.1",
     "eslint-plugin-vue": "^9.9.0",
-    "husky": "^8.0.0",
+    "husky": "^8.0.3",
     "lint": "^1.1.2",
     "lint-staged": "^13.2.0",
     "playwright": "^1.31.2",

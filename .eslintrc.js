@@ -1,12 +1,15 @@
 module.exports = {
+    "root": true,
     "env": {
+        "node": true,
+        "commonjs": true,
         "browser": true,
         "es2021": true,
     },
     "extends": [
+        "plugin:ui-testing/playwright",
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:ui-testing/playwright",
     ],
     "overrides": [
     ],
@@ -18,8 +21,6 @@ module.exports = {
        "ui-testing",
     ],
     "rules": {
-        "ui-testing/no-tag-name-selector": "error", // default = warn
-        "ui-testing/no-css-page-layout-selector": "warn", // default = error
- 
+        "ui-testing/no-hard-wait": ["error", "playwright"]
     }
 }
