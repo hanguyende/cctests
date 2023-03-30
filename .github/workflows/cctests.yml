@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set
-        run: npm ci --scope=@joebobmiles --registry=https://registry.npmjs.org/
+        run: npm update --registry=https://registry.npmjs.org/
 
       - name: Run tests
         run: npm test
