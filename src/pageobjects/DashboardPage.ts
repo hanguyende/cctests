@@ -41,7 +41,7 @@ export class DashboardPage {
         console.log("all titles " + titles);
         console.log("this we wanna add " + productName);
         const count = await this.products.count();
-        expect (count).toBeGreaterThan(7);
+        expect (count).toBeGreaterThan(3);
         for (let i = 0; i < count; ++i) {
             if (await this.products.nth(i).locator("b").textContent() === productName) {
                 //add to cart

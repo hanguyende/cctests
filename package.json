@@ -6,7 +6,6 @@
   "scripts": {
     "test": "npx cucumber-js -p test_runner --parallel 1 -f json:report/report.json; node report.js type report/report.json",
     "lint": "eslint . --ext .ts",
-    "report": "open reports/report.html",
     "prepare": "husky install"
   },
   "repository": {

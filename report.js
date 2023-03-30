@@ -6,4 +6,5 @@ const options = {
   reportSuiteAsScenarios: true,
   launchReport: false,
 };
+
 reporter.generate(options);
