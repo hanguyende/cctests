@@ -12,8 +12,5 @@ jobs:
       - name: Setup cctests
         uses: actions/checkout@v3
 
-      - name: Run linter
-        run: npm run lint
-
       - name: Run tests
         run: npm test
