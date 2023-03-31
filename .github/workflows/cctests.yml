@@ -23,6 +23,11 @@ jobs:
           TAGS: "@Cart"
         run: npm run runWithTags
 
+      - name: Upload test coverage as artifact for TAGS
+        uses: actions/upload-artifact@v3
+        with:
+          name: cucumber-html-report-tags
+          path: report
 
       - name: Run tests chromium
         env:
@@ -35,7 +40,7 @@ jobs:
           name: cucumber-html-report-chromium
           path: report
           
-      - name: Run tests
+      - name: Run tests firefox
         env:
           BROWSER: firefox
         run: npm test
