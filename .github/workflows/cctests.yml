@@ -17,3 +17,9 @@ jobs:
 
       - name: Run tests
         run: npm test
+        
+      - name: Deploy report page to GitHub Page
+        uses: actions/checkout@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target/report
