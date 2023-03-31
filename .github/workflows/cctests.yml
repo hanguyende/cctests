@@ -18,11 +18,24 @@ jobs:
       - name: Run eslint
         run: npm run lint
 
-      - name: Run tests
+      - name: Run tests chromium
+        env:
+          BROWSER: chromium
         run: npm test
       
-      - name: Upload test coverage as artifact
+      - name: Upload test coverage as artifact for ${{ BROWSER }}
         uses: actions/upload-artifact@v3
         with:
-          name: report-${{ matrix.os }}
+          name: cucumber-html-report-${{ BROWSER }}
           path: report
+          
+      - name: Run tests
+        env:
+          BROWSER: firefox
+        run: npm test
+      
+      - name: Upload test coverage as artifact for ${{ BROWSER }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: cucumber-html-report-${{ BROWSER }}
+          path: report     
