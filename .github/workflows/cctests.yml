@@ -14,6 +14,9 @@ jobs:
 
       - name: Set
         run: npm update --registry=https://registry.npmjs.org/
+        
+      - name: Run eslint
+        run: npm run lint
 
       - name: Run tests
         run: npm test
