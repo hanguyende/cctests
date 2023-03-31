@@ -23,10 +23,10 @@ jobs:
           BROWSER: chromium
         run: npm test
       
-      - name: Upload test coverage as artifact for firefox
+      - name: Upload test coverage as artifact for chromium
         uses: actions/upload-artifact@v3
         with:
-          name: cucumber-html-report-${{ BROWSER }}
+          name: cucumber-html-report-chromium
           path: report
           
       - name: Run tests
@@ -34,8 +34,8 @@ jobs:
           BROWSER: firefox
         run: npm test
       
-      - name: Upload test coverage as artifact for ${{ BROWSER }}
+      - name: Upload test coverage as artifact for firefox
         uses: actions/upload-artifact@v3
         with:
-          name: cucumber-html-report-${{ BROWSER }}
+          name: cucumber-html-report-firefox
           path: report     
