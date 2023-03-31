@@ -20,9 +20,9 @@ jobs:
 
       - name: Run tests
         run: npm test
-        
-      - name: Deploy report page to GitHub Page
-        uses: actions/checkout@v3
+      
+      - name: Upload test coverage as artifact
+        uses: actions/upload-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./report
+          name: report-${{ matrix.os }}
+          path: report
