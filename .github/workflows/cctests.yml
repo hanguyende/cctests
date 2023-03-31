@@ -18,6 +18,12 @@ jobs:
       - name: Run eslint
         run: npm run lint
 
+      - name: Run Test with tags
+        env:
+          TAGS: @Cart
+        run: npm run runWithTags
+
+
       - name: Run tests chromium
         env:
           BROWSER: chromium
