@@ -22,4 +22,4 @@ jobs:
         uses: actions/checkout@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/report
+          publish_dir: ./report
