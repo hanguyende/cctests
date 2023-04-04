@@ -17,16 +17,16 @@ jobs:
         
       - name: Run eslint
         run: npm run lint
+        
+      - name: Run Test Parallel
+        env:
+          PARALLEL: "2"
+        run: npm run runParallel   
 
       - name: Run Test with tags
         env:
           TAGS: "@Login"
         run: npm run runWithTags
-
-      - name: Run Test Parallel
-        env:
-          PARALLEL: "2"
-        run: npm run runParallel
         
       - name: Upload test coverage as artifact for TAGS
         uses: actions/upload-artifact@v3
