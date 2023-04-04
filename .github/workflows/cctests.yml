@@ -20,9 +20,14 @@ jobs:
 
       - name: Run Test with tags
         env:
-          TAGS: "@Cart"
+          TAGS: "@Login"
         run: npm run runWithTags
 
+      - name: Run Test Parallel
+        env:
+          PARALLEL: "2"
+        run: npm run runParallel
+        
       - name: Upload test coverage as artifact for TAGS
         uses: actions/upload-artifact@v3
         with:
