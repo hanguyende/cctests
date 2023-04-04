@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npx cucumber-js -p test_runner --parallel 1 -f json:report/report.json; node report.js type report/report.json",
     "runWithTags": "npx cucumber-js -p test_runner --tags $TAGS -f json:report/report.json; node report.js type report/report.json",
-    "runParallel": "npx cucumber-js -p test_runner --parallel 2 --tags @Login -f json:report/report.json; node report.js type report/report.json",
+    "runParallel": "npx cucumber-js -p test_runner --parallel $PARALLEL --tags @Login -f json:report/report.json; node report.js type report/report.json",
     "lint": "eslint . --ext .ts",
     "prepare": "husky install"
   },
